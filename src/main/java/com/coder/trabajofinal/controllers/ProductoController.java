@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coder.trabajofinal.models.Producto;
+import com.coder.trabajofinal.models.entities.Producto;
 import com.coder.trabajofinal.services.ProductoService;
 
 @CrossOrigin()

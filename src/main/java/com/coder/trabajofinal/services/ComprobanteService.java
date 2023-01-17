@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coder.trabajofinal.models.Comprobante;
+import com.coder.trabajofinal.models.entities.Comprobante;
 import com.coder.trabajofinal.repositories.ComprobanteRepository;
 
 @Service

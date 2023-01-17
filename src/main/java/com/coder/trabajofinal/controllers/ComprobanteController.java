@@ -12,13 +12,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
-import com.coder.trabajofinal.models.Comprobante;
-import com.coder.trabajofinal.models.ProductoVenta;
+import com.coder.trabajofinal.models.entities.Comprobante;
+import com.coder.trabajofinal.models.entities.ProductoVenta;
+import com.coder.trabajofinal.models.schemas.DateApiResponse;
 import com.coder.trabajofinal.services.ClienteService;
 import com.coder.trabajofinal.services.ComprobanteService;
+import com.coder.trabajofinal.services.DateApiService;
 import com.coder.trabajofinal.services.ProductoService;
 import com.coder.trabajofinal.services.ProductoVentaService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @CrossOrigin()
 @RestController
@@ -33,6 +39,8 @@ public class ComprobanteController {
     ProductoService productoService;
     @Autowired
     ProductoVentaService productoVentaService;
+    @Autowired
+    DateApiService dateApiService;
 
     @GetMapping("")
     public ResponseEntity<?> getAllComprobantes() {
@@ -59,6 +67,13 @@ public class ComprobanteController {
 
         else {
 
+            try {
+                comprobante.setFecha(dateApiService.getDate());
+            } catch (Exception e) {
+                System.out.println(e);
+                System.out.println("Error al obtener la fecha, usando la fecha del sistema");
+                comprobante.setFecha(LocalDate.now());
+            }
             comprobante.setFecha(LocalDate.now());
             Double total = 0.0;
             for (ProductoVenta p : comprobante.getProductoVenta()) {

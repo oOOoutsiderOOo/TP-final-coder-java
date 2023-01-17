@@ -1,4 +1,4 @@
-package com.coder.trabajofinal.models;
+package com.coder.trabajofinal.models.entities;
 
 import java.time.LocalDate;
 import java.util.List;

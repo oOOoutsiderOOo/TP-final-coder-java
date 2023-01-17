@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coder.trabajofinal.models.Cliente;
+import com.coder.trabajofinal.models.entities.Cliente;
 import com.coder.trabajofinal.repositories.ClienteRepository;
 
 @Service

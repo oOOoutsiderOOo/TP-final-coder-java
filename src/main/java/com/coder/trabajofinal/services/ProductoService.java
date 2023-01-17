@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coder.trabajofinal.models.Producto;
+import com.coder.trabajofinal.models.entities.Producto;
 import com.coder.trabajofinal.repositories.ProductoRepository;
 
 @Service

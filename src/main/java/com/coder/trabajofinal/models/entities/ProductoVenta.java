@@ -1,4 +1,4 @@
-package com.coder.trabajofinal.models;
+package com.coder.trabajofinal.models.entities;
 
 import java.util.Objects;
 

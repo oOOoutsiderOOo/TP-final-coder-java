@@ -1,7 +1,6 @@
 package com.coder.trabajofinal.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coder.trabajofinal.models.Cliente;
+import com.coder.trabajofinal.models.entities.Cliente;
 import com.coder.trabajofinal.services.ClienteService;
 
 @CrossOrigin()
@@ -28,13 +27,23 @@ public class ClienteController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllClientes() {
-        List<Cliente> clientes = clienteService.getAllClientes();
-        return ResponseEntity.ok(clientes);
+        if (clienteService.getAllClientes().isEmpty()) {
+            return ResponseEntity.badRequest().body("No hay clientes cargados");
+        } else {
+            List<Cliente> clientes = clienteService.getAllClientes();
+            return ResponseEntity.ok(clientes);
+        }
     }
 
     @GetMapping("/{id}")
-    public Optional<Cliente> getClienteById(@PathVariable Long id) {
-        return clienteService.getClienteById(id);
+    public ResponseEntity<?> getClienteById(@PathVariable Long id) {
+        if (clienteService.getClienteById(id).isEmpty()) {
+            return ResponseEntity.badRequest().body("No se encontro el cliente");
+        }
+
+        else {
+            return ResponseEntity.ok(clienteService.getClienteById(id));
+        }
     }
 
     @GetMapping("/buscar/{searchQuery}")

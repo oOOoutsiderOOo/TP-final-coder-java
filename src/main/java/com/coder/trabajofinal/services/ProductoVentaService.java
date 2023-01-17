@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.coder.trabajofinal.models.ProductoVenta;
+import com.coder.trabajofinal.models.entities.ProductoVenta;
 import com.coder.trabajofinal.repositories.ProductoVentaRepository;
 
 @Service
