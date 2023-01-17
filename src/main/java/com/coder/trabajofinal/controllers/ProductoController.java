@@ -24,6 +24,9 @@ public class ProductoController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllProductos() {
+        if (productoService.getAllProductos().isEmpty()) {
+            return ResponseEntity.badRequest().body("No hay productos cargados");
+        }
         return ResponseEntity.ok(productoService.getAllProductos());
     }
 

@@ -4,8 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.coder.trabajofinal.utils.ComprobanteSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "comprobante")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "comprobanteId")
+@JsonSerialize(using = ComprobanteSerializer.class)
 public class Comprobante {
 
     @Id

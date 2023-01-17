@@ -29,10 +29,10 @@ public class ClienteController {
     public ResponseEntity<?> getAllClientes() {
         if (clienteService.getAllClientes().isEmpty()) {
             return ResponseEntity.badRequest().body("No hay clientes cargados");
-        } else {
-            List<Cliente> clientes = clienteService.getAllClientes();
-            return ResponseEntity.ok(clientes);
         }
+        List<Cliente> clientes = clienteService.getAllClientes();
+        return ResponseEntity.ok(clientes);
+
     }
 
     @GetMapping("/{id}")
@@ -40,10 +40,8 @@ public class ClienteController {
         if (clienteService.getClienteById(id).isEmpty()) {
             return ResponseEntity.badRequest().body("No se encontro el cliente");
         }
+        return ResponseEntity.ok(clienteService.getClienteById(id));
 
-        else {
-            return ResponseEntity.ok(clienteService.getClienteById(id));
-        }
     }
 
     @GetMapping("/buscar/{searchQuery}")

@@ -3,6 +3,7 @@ package com.coder.trabajofinal.models.entities;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Entity;
@@ -15,6 +16,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "producto_venta")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productoVentaId")
+@JsonIgnoreProperties({ "comprobante" })
 public class ProductoVenta {
 
     @Id

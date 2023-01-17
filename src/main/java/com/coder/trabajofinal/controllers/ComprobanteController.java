@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.coder.trabajofinal.models.entities.Comprobante;
 import com.coder.trabajofinal.models.entities.ProductoVenta;
-import com.coder.trabajofinal.models.schemas.DateApiResponse;
 import com.coder.trabajofinal.services.ClienteService;
 import com.coder.trabajofinal.services.ComprobanteService;
 import com.coder.trabajofinal.services.DateApiService;
 import com.coder.trabajofinal.services.ProductoService;
 import com.coder.trabajofinal.services.ProductoVentaService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @CrossOrigin()
 @RestController
@@ -65,33 +60,31 @@ public class ComprobanteController {
             return ResponseEntity.badRequest().body("Uno o más productos tienen una cantidad inválida");
         }
 
-        else {
-
-            try {
-                comprobante.setFecha(dateApiService.getDate());
-            } catch (Exception e) {
-                System.out.println(e);
-                System.out.println("Error al obtener la fecha, usando la fecha del sistema");
-                comprobante.setFecha(LocalDate.now());
-            }
+        try {
+            comprobante.setFecha(dateApiService.getDate());
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Error al obtener la fecha, usando la fecha del sistema");
             comprobante.setFecha(LocalDate.now());
-            Double total = 0.0;
-            for (ProductoVenta p : comprobante.getProductoVenta()) {
-                total += p.getProducto().getPrecio() * p.getCantidad();
-            }
-            comprobante.setTotal(comprobante.getProductoVenta().stream().mapToDouble(p -> {
-                return (p.getCantidad() * productoService.getProductoById(p.getProducto().getProductoId()).getPrecio());
-            }).sum());
-            Comprobante comprobanteCreado = comprobanteService.addNewComprobante(comprobante);
-            comprobante.getProductoVenta().stream().forEach(p -> {
-                p.setComprobante(comprobanteCreado);
-                p.setPrecio(p.getProducto().getPrecio());
-                productoVentaService.addNew(p);
-                productoService.updateStock(p.getProducto().getProductoId(), p.getCantidad());
-            });
-
-            return ResponseEntity.ok(comprobanteCreado);
         }
+        comprobante.setFecha(LocalDate.now());
+        Double total = 0.0;
+        for (ProductoVenta p : comprobante.getProductoVenta()) {
+            total += p.getProducto().getPrecio() * p.getCantidad();
+        }
+        comprobante.setTotal(comprobante.getProductoVenta().stream().mapToDouble(p -> {
+            return (p.getCantidad() * productoService.getProductoById(p.getProducto().getProductoId()).getPrecio());
+        }).sum());
+        Comprobante comprobanteCreado = comprobanteService.addNewComprobante(comprobante);
+        comprobante.getProductoVenta().stream().forEach(p -> {
+            p.setComprobante(comprobanteCreado);
+            p.setPrecio(p.getProducto().getPrecio());
+            productoVentaService.addNew(p);
+            productoService.updateStock(p.getProducto().getProductoId(), p.getCantidad());
+        });
+
+        return ResponseEntity.ok(comprobanteCreado);
+
     }
 
     @DeleteMapping("/{id}")

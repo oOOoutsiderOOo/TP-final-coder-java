@@ -3,9 +3,6 @@ package com.coder.trabajofinal.models.entities;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "cliente")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "clienteId")
+// @JsonSerialize(using = ClienteSerializer.class)
 public class Cliente {
 
     @Id

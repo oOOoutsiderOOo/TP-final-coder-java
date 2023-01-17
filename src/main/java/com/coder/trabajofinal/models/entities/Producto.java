@@ -3,8 +3,9 @@ package com.coder.trabajofinal.models.entities;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.coder.trabajofinal.utils.ProductoSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,7 +18,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "producto")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "productoId")
+@JsonSerialize(using = ProductoSerializer.class)
+
 public class Producto {
 
     @Id
